@@ -1,0 +1,35 @@
+create database twitter;
+
+use twitter;
+
+create table usuarios(
+	id int not null primary key auto_increment,
+	usuario varchar(50),
+	email varchar(100) not null,
+	senha varchar(32) not null
+);
+
+create table tweet(
+	id_tweet int not null primary key auto_increment,
+	id_usuario int not null,
+	tweet varchar(140) not null,
+	data_inclusao datetime default current_timestamp
+);
+
+create table usuarios_seguidores(
+	id_usuario_seguidor int not null primary key auto_increment,
+	id_usuario int not null,
+	seguindo_id_usuario int not null,
+	data_registro datetime default current_timestamp
+);
+
+INSERT INTO usuarios(id, usuario, email, senha) VALUES
+(4, 'gabriel', 'xxx@x1', 123),
+(5, 'pedro', 'xx@xx2', 123),
+(6, 'henrique', 'xx@xx3', 123),
+(7, 'doão', 'xx@xx4', 123),
+(2, 'kiko', 'xxx@x5', 123),
+(3, 'xunda', 'xxx@x6', 123);
+
+Busca todos os usuários tendo eles seguidores ou não, utilizando o id = 1
+SELECT u.*, us.* FROM usuarios AS u LEFT JOIN usuarios_seguidores AS us ON (us.id_usuario = 1 AND u.id = us.seguindo_id_usuario) WHERE u.usuario like '%a%' AND u.id <> 1;
